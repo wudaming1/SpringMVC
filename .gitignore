@@ -6,5 +6,6 @@
 .idea
 *.iml
 out
+build
 gen
 
