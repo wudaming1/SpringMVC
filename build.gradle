@@ -27,11 +27,15 @@ dependencies {
 
     //spring相关
     compile 'org.springframework:spring-webmvc:4.3.6.RELEASE'
-
+    // https://mvnrepository.com/artifact/org.springframework/spring-orm
+    compile group: 'org.springframework', name: 'spring-orm', version: '5.0.2.RELEASE'
 
     //hibernate jpa相关
     compile group: 'org.jboss.spec.javax.transaction', name: 'jboss-transaction-api_1.2_spec', version: '1.0.1.Final'
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.2.Final'
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.12.Final'
+
     //c3p0连接池
     compile group: 'org.hibernate', name: 'hibernate-c3p0', version: '5.2.2.Final'
 

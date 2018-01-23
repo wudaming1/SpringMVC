@@ -63,8 +63,8 @@
         <!-- -->
 
 
-        <!-- 将Session与线程绑定=> 只有配置了该配置,才能使用getCurrentSession -->
-        <property name="hibernate.current_session_context_class">thread</property>
+        <!--&lt;!&ndash; 将Session与线程绑定=> 只有配置了该配置,才能使用getCurrentSession &ndash;&gt;-->
+        <!--<property name="hibernate.current_session_context_class">thread</property>-->
 
 
         <!-- -->

@@ -34,7 +34,7 @@ class UserController {
             val session = factory.currentSession
             val tx = session.beginTransaction()
             val user = UserBean(name, password)
-            val hql = "FROM UserBean as E where E.userName = $name"
+            val hql = "FROM UserBean as E where E.userName = '$name'"
             val query = session.createQuery(hql)
             val list = query.list()
 
@@ -90,7 +90,7 @@ class UserController {
             val session = factory.currentSession
             val tx = session.beginTransaction()
             val user = UserBean(name, password)
-            val hql = "FROM UserBean as E where E.userName = $name"
+            val hql = "FROM UserBean as E where E.userName = '$name'"
             val query = session.createQuery(hql)
             val list = query.list()
 

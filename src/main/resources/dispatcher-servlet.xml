@@ -25,13 +25,13 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
-        <property name="mappingDirectoryLocations" value="classpath:com/ming/spring/bean"/>
+        <!--<property name="mappingDirectoryLocations" value="classpath:com/ming/spring/bean"/>-->
     </bean>
 
-    <!-- 配置Spring声明式事务 -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <!--&lt;!&ndash; 配置Spring声明式事务 &ndash;&gt;-->
+    <!--<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">-->
+        <!--<property name="sessionFactory" ref="sessionFactory"/>-->
+    <!--</bean>-->
 
     <bean id="user" class="com.ming.spring.bean.UserBean"/>
 
@@ -40,12 +40,12 @@
     </bean>
 
     <!-- 配置事务事务属性 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="get*" read-only="true"/>
-            <tx:method name="*"/>
-        </tx:attributes>
-    </tx:advice>
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="get*" read-only="true"/>-->
+            <!--<tx:method name="*"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
     <!-- 配置事务切点，并把切点和事务属性关联起来 -->
     <!--<aop:config>-->
         <!--<aop:pointcut expression="execution(* com.elgin.spring.hibernate.service.*.*(..))" id="txPointcut"/>-->
