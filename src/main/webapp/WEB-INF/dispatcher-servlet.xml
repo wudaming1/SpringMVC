@@ -10,7 +10,12 @@
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context.xsd
                         http://www.springframework.org/schema/mvc
-                        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd"
+>
     <context:component-scan base-package="com.ming.spring"></context:component-scan>
     <mvc:annotation-driven></mvc:annotation-driven>
 
@@ -23,9 +28,20 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="user" value="root"/>
+        <property name="password" value="123456"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/SpringAries"/>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+    </bean>
+
+
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
         <property name="mappingDirectoryLocations" value="classpath:com/ming/spring/bean"/>
+        <property name="dataSource" ref="dataSource">
+
+        </property>
     </bean>
 
     <!-- 配置Spring声明式事务 -->
@@ -46,10 +62,10 @@
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
-    <!-- 配置事务切点，并把切点和事务属性关联起来 -->
-    <!--<aop:config>-->
-        <!--<aop:pointcut expression="execution(* com.elgin.spring.hibernate.service.*.*(..))" id="txPointcut"/>-->
-        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>-->
-    <!--</aop:config>-->
+     <!--配置事务切点，并把切点和事务属性关联起来-->
+    <aop:config>
+        <aop:pointcut expression="execution(* com.ming.spring.dao.*.*(..))" id="txPointcut"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
 
 </beans>

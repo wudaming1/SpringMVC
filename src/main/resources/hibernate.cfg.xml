@@ -7,13 +7,13 @@
     <session-factory>
         <!-- property 元素用于配置Hibernate中的属性 键:值-->
         <!-- hibernate.connection.driver_class : 连接数据库的驱动  -->
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <!-- hibernate.connection.username : 连接数据库的用户名 -->
-        <property name="hibernate.connection.username">root</property>
-        <!-- hibernate.connection.password : 连接数据库的密码 -->
-        <property name="hibernate.connection.password">123456</property>
-        <!-- hibernate.connection.url : 连接数据库的地址,路径 -->
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/SpringAries</property>
+        <!--<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>-->
+        <!--&lt;!&ndash; hibernate.connection.username : 连接数据库的用户名 &ndash;&gt;-->
+        <!--<property name="hibernate.connection.username">root</property>-->
+        <!--&lt;!&ndash; hibernate.connection.password : 连接数据库的密码 &ndash;&gt;-->
+        <!--<property name="hibernate.connection.password">123456</property>-->
+        <!--&lt;!&ndash; hibernate.connection.url : 连接数据库的地址,路径 &ndash;&gt;-->
+        <!--<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/SpringAries</property>-->
 
 
         <!-- -->

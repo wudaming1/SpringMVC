@@ -4,6 +4,7 @@ import com.ming.spring.dao.UserDao
 import org.hibernate.cfg.Configuration
 import org.junit.Test
 import org.springframework.context.support.ClassPathXmlApplicationContext
+import org.springframework.context.support.FileSystemXmlApplicationContext
 
 
 class UserDaoTest{
@@ -12,7 +13,7 @@ class UserDaoTest{
     fun testSave() {
         val name = "abc"
         val password = "123456"
-        val context = ClassPathXmlApplicationContext("dispatcher-servlet.xml")
+        val context = FileSystemXmlApplicationContext("//Users/wudaming/IdeaProjects/SpringMVC/src/main/webapp/WEB-INF/dispatcher-servlet.xml")
         val user = context.getBean("user") as UserBean
         user.userName = name
         user.password = password
