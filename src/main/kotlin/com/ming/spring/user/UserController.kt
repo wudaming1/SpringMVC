@@ -3,8 +3,10 @@ package com.ming.spring.user
 import com.ming.spring.bean.*
 import com.ming.spring.dao.UserDao
 import com.ming.spring.jwt.JWTHelper
+import com.ming.spring.service.UserService
 import com.ming.spring.utils.JsonUtil
 import com.ming.spring.utils.SpringContextUtil
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 class UserController {
+
+    @Autowired
+    lateinit var userService: UserService
 
     @RequestMapping(method = [(RequestMethod.POST)], value = ["/login"])
     fun login(@RequestParam("name") name: String, @RequestParam("password") password: String, response: HttpServletResponse) {
@@ -32,10 +37,8 @@ class UserController {
         }
 
         if (result.status != ResultCode.FAIL) {
-            val dao = SpringContextUtil.getBean("userDao") as UserDao
-            val queryResult = dao.queryExist(name)
-            if (queryResult.isNotEmpty()) {
-                val localBean = queryResult[0] as UserBean
+            val localBean = userService.findUserByName(name)
+            if (localBean != null) {
                 if (localBean.password != password) {
                     error.message = "密码错误"
                     result.status = ResultCode.FAIL
@@ -75,14 +78,13 @@ class UserController {
         }
 
         if (result.status != ResultCode.FAIL) {
-            val dao = SpringContextUtil.getBean("userDao") as UserDao
-            val list = dao.queryExist(name)
 
-            error.message = if (list.isNotEmpty()) {
+            val localBean = userService.findUserByName(name)
+            error.message = if (localBean != null) {
                 result.status = ResultCode.FAIL
                 "用户名已存在，请登录！"
             } else {
-                val id = dao.save(UserBean(name, password))
+                val id = userService.save(UserBean(name, password))
                 val token = JWTHelper.generateJWT(id)
                 result.data = token
                 result.status = ResultCode.SUCCESS

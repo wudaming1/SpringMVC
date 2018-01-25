@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository
 @Repository
 open class UserDao : HibernateDaoSupport() {
 
-//    private var template: HibernateTemplate = hibernateTemplate!!
 
     @Autowired
     open fun init(sessionFactory: SessionFactory) {
@@ -34,7 +33,7 @@ open class UserDao : HibernateDaoSupport() {
         return hibernateTemplate!!.save(userBean) as Int
     }
 
-    open fun queryExist(name: String): List<*> {
+    open fun queryUser(name: String): List<*> {
         val result = hibernateTemplate!!.find("FROM UserBean as E where E.userName = '$name'")
         return (result as List<*>)
     }
