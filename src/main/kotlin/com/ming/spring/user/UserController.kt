@@ -5,7 +5,6 @@ import com.ming.spring.dao.UserDao
 import com.ming.spring.jwt.JWTHelper
 import com.ming.spring.utils.JsonUtil
 import com.ming.spring.utils.SpringContextUtil
-import org.hibernate.cfg.Configuration
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
@@ -76,27 +75,19 @@ class UserController {
         }
 
         if (result.status != ResultCode.FAIL) {
-            val factory = Configuration().configure().buildSessionFactory()
-            val session = factory.currentSession
-            val tx = session.beginTransaction()
-            val user = UserBean(name, password)
-            val hql = "FROM UserBean as E where E.userName = '$name'"
-            val query = session.createQuery(hql)
-            val list = query.list()
+            val dao = SpringContextUtil.getBean("userDao") as UserDao
+            val list = dao.queryExist(name)
 
-            error.message = if (list.size > 0) {
+            error.message = if (list.isNotEmpty()) {
                 result.status = ResultCode.FAIL
                 "用户名已存在，请登录！"
             } else {
-                val id = session.save(user) as Int
+                val id = dao.save(UserBean(name,password))
                 val token = JWTHelper.generateJWT(id)
                 result.data = token
                 result.status = ResultCode.SUCCESS
                 "Success"
             }
-            tx.commit()
-            session.close()
-
         }
 
         if (result.status == ResultCode.FAIL) {
@@ -104,6 +95,5 @@ class UserController {
         }
 
         response.writer.write(JsonUtil.writeValueAsString(result))
-//        return JsonUtil.writeValueAsString(result)
     }
 }
