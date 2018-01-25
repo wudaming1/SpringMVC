@@ -54,10 +54,6 @@
 
     <bean id="user" class="com.ming.spring.bean.UserBean"/>
 
-    <bean id="userDao" class="com.ming.spring.dao.UserDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
     <!-- 配置事务事务属性 -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>

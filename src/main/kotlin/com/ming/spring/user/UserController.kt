@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse
 class UserController {
 
     @RequestMapping(method = [(RequestMethod.POST)], value = ["/login"])
-    fun login(@RequestParam("name") name: String, @RequestParam("password") password: String,response: HttpServletResponse) {
+    fun login(@RequestParam("name") name: String, @RequestParam("password") password: String, response: HttpServletResponse) {
         val result = ResponseBean()
         val error = ErrorBean()
         if (name.isEmpty()) {
@@ -34,18 +34,18 @@ class UserController {
         if (result.status != ResultCode.FAIL) {
             val dao = SpringContextUtil.getBean("userDao") as UserDao
             val queryResult = dao.queryExist(name)
-            if (queryResult.isNotEmpty()){
+            if (queryResult.isNotEmpty()) {
                 val localBean = queryResult[0] as UserBean
-                if (localBean.password != password){
+                if (localBean.password != password) {
                     error.message = "密码错误"
                     result.status = ResultCode.FAIL
                     error.code = ErrorCode.UNKNOWN
-                }else{
+                } else {
                     result.status = ResultCode.SUCCESS
                     val token = JWTHelper.generateJWT(localBean.id)
                     result.data = token
                 }
-            }else{
+            } else {
                 result.status = ResultCode.FAIL
                 error.code = ErrorCode.UNKNOWN
                 error.message = "不存在此用户"
@@ -55,11 +55,11 @@ class UserController {
         if (result.status == ResultCode.FAIL) {
             result.error = error
         }
-         response.writer.write(JsonUtil.writeValueAsString(result))
+        response.writer.write(JsonUtil.writeValueAsString(result))
     }
 
     @RequestMapping(method = [(RequestMethod.POST)], value = ["/register"])
-    fun register(@RequestParam("name") name: String, @RequestParam("password") password: String,response: HttpServletResponse) {
+    fun register(@RequestParam("name") name: String, @RequestParam("password") password: String, response: HttpServletResponse) {
         val result = ResponseBean()
         val error = ErrorBean()
         if (name.isEmpty()) {
@@ -82,7 +82,7 @@ class UserController {
                 result.status = ResultCode.FAIL
                 "用户名已存在，请登录！"
             } else {
-                val id = dao.save(UserBean(name,password))
+                val id = dao.save(UserBean(name, password))
                 val token = JWTHelper.generateJWT(id)
                 result.data = token
                 result.status = ResultCode.SUCCESS
@@ -95,5 +95,10 @@ class UserController {
         }
 
         response.writer.write(JsonUtil.writeValueAsString(result))
+    }
+
+    @RequestMapping(method = [(RequestMethod.GET)], value = ["/userInfo"])
+    fun getUserInfo(){
+
     }
 }
