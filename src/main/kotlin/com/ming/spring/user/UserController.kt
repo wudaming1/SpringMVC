@@ -1,14 +1,17 @@
 package com.ming.spring.user
 
 import com.ming.spring.bean.*
+import com.ming.spring.dao.UserDao
 import com.ming.spring.jwt.JWTHelper
 import com.ming.spring.utils.JsonUtil
+import com.ming.spring.utils.SpringContextUtil
 import org.hibernate.cfg.Configuration
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletResponse
+
 
 @RestController
 class UserController {
@@ -30,43 +33,30 @@ class UserController {
         }
 
         if (result.status != ResultCode.FAIL) {
-            val factory = Configuration().configure().buildSessionFactory()
-            val session = factory.currentSession
-            val tx = session.beginTransaction()
-            val user = UserBean(name, password)
-            val hql = "FROM UserBean as E where E.userName = '$name'"
-            val query = session.createQuery(hql)
-            val list = query.list()
-
-            error.message = if (list.size > 0) {
-                val resultBean = list[0] as UserBean
-                if (user.password == resultBean.password) {
-                    result.status = ResultCode.SUCCESS
-                    val token = JWTHelper.generateJWT(resultBean.id)
-                    result.data = token
-                    "status"
-                } else {
+            val dao = SpringContextUtil.getBean("userDao") as UserDao
+            val queryResult = dao.queryExist(name)
+            if (queryResult.isNotEmpty()){
+                val localBean = queryResult[0] as UserBean
+                if (localBean.password != password){
+                    error.message = "密码错误"
                     result.status = ResultCode.FAIL
                     error.code = ErrorCode.UNKNOWN
-                    "密码错误"
+                }else{
+                    result.status = ResultCode.SUCCESS
+                    val token = JWTHelper.generateJWT(localBean.id)
+                    result.data = token
                 }
-            } else {
+            }else{
                 result.status = ResultCode.FAIL
                 error.code = ErrorCode.UNKNOWN
-                "不存在此用户"
+                error.message = "不存在此用户"
             }
-
-            tx.commit()
-            session.close()
-
         }
 
         if (result.status == ResultCode.FAIL) {
             result.error = error
         }
-
          response.writer.write(JsonUtil.writeValueAsString(result))
-
     }
 
     @RequestMapping(method = [(RequestMethod.POST)], value = ["/register"])

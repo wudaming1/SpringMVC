@@ -28,6 +28,9 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <!--Spring中bean获取的工具类-->
+    <bean id="springContextUtils" class="com.ming.spring.utils.SpringContextUtil" />
+
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="user" value="root"/>
         <property name="password" value="123456"/>

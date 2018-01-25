@@ -11,4 +11,7 @@
         <property name="userName"  type="string"/>
         <property name="password"  type="string"/>
     </class>
+    <!--<query name="byName">-->
+        <!--<![from user where u.name = ?]>-->
+    <!--</query>-->
 </hibernate-mapping>

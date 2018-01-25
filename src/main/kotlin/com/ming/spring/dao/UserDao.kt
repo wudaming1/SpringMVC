@@ -23,16 +23,15 @@ open class UserDao:HibernateDaoSupport(){
         return hibernateTemplate!!.save(userBean) as Int
     }
 
-    open fun queryExist(name: String):Boolean {
+    open fun queryExist(name: String): List<*> {
         val result = hibernateTemplate!!.find("FROM UserBean as E where E.userName = '$name'")
-        return !(result as List<*>).isNotEmpty()
+        return (result as List<*>)
     }
 
-//    fun findByProperty(key:String,value:Any){
-//        val queryString = "FROM UserBean as E where E.$key = ?"
-//        hibernateTemplate!!.findByNamedQuery()
-//        val result = hibernateTemplate!!.find("FROM UserBean as E where E.userName = '$name'")
-//    }
+    fun findByProperty(key:String,value:Any){
+        val queryString = "FROM UserBean as E where E.$key = ?"
+        hibernateTemplate!!.findByNamedQuery("byName")
+    }
 
 
 

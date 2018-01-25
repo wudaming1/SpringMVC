@@ -31,8 +31,11 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-orm', version: '5.0.2.RELEASE'
     // https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
     compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.13'
-    // https://mvnrepository.com/artifact/spring/spring-aopalliance
-    compile group: 'spring', name: 'spring-aopalliance', version: '1.0'
+//     https://mvnrepository.com/artifact/spring/spring-aopalliance
+//    compile group: 'spring', name: 'spring-aopalliance', version: '1.0'
+    // https://mvnrepository.com/artifact/org.springframework/spring-tx
+    compile group: 'org.springframework', name: 'spring-tx', version: '5.0.2.RELEASE'
+
 
 
     //hibernate jpa相关
