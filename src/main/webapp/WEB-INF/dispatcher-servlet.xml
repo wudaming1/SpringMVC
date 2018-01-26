@@ -24,7 +24,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/auth"/>
             <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
-            <bean class="com.ming.spring.user.AuthIntercept"/>
+            <bean class="com.ming.spring.intercept.AuthIntercept"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -42,8 +42,11 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
         <property name="mappingDirectoryLocations" value="classpath:com/ming/spring/bean"/>
-        <property name="dataSource" ref="dataSource">
-
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan">
+            <list>
+                <value>com.ming.spring.bean</value>
+            </list>
         </property>
     </bean>
 
@@ -51,8 +54,6 @@
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
-    <bean id="user" class="com.ming.spring.bean.UserBean"/>
 
     <!-- 配置事务事务属性 -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">

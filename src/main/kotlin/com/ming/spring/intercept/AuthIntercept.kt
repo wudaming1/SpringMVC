@@ -1,4 +1,4 @@
-package com.ming.spring.user
+package com.ming.spring.intercept
 
 import com.auth0.jwt.exceptions.AlgorithmMismatchException
 import com.auth0.jwt.exceptions.InvalidClaimException

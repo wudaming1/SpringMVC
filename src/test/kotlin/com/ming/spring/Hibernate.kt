@@ -1,3 +1,5 @@
+package com.ming.spring
+
 import com.ming.spring.bean.UserInfoBean
 import org.hibernate.cfg.Configuration
 import org.junit.Test

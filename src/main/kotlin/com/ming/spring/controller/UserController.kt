@@ -1,11 +1,9 @@
-package com.ming.spring.user
+package com.ming.spring.controller
 
 import com.ming.spring.bean.*
-import com.ming.spring.dao.UserDao
 import com.ming.spring.jwt.JWTHelper
 import com.ming.spring.service.UserService
 import com.ming.spring.utils.JsonUtil
-import com.ming.spring.utils.SpringContextUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod

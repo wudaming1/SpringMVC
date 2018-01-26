@@ -1,3 +1,5 @@
+package com.ming.spring.dao
+
 import com.ming.spring.bean.UserBean
 import com.ming.spring.dao.UserDao
 import org.junit.Test
@@ -11,13 +13,13 @@ class UserDaoTest{
         val name = "abcd"
         val password = "123456"
         val context = FileSystemXmlApplicationContext("//Users/wudaming/IdeaProjects/SpringMVC/src/main/webapp/WEB-INF/dispatcher-servlet.xml")
-        val user = context.getBean("user") as UserBean
+        val user = context.getBean("userBean") as UserBean
         user.userName = name
         user.password = password
 
         val dao = context.getBean("userDao") as UserDao
         dao.save(user)
-//        dao.findAll().listIterator().forEach { print(it.userName + "\n") }
+//        userDao.findAll().listIterator().forEach { print(it.userName + "\n") }
 
     }
 }
