@@ -3,8 +3,10 @@ package com.ming.spring.dao
 import com.ming.spring.bean.UserBean
 import org.hibernate.SessionFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.orm.hibernate5.HibernateTemplate
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport
 import org.springframework.stereotype.Repository
+import java.util.*
 
 
 /**
@@ -13,34 +15,34 @@ import org.springframework.stereotype.Repository
  *  在生成代理的时候采用的是CGLib库，需要使用继承特性。
  */
 @Repository
-open class UserDao : HibernateDaoSupport() {
+open class UserDao : BaseDao() {
 
-
-    @Autowired
-    open fun init(sessionFactory: SessionFactory) {
-        super.setSessionFactory(sessionFactory)
-    }
 
     open fun findAll(): List<UserBean> {
-        return hibernateTemplate!!.find("FROM UserBean") as List<UserBean>
+        return template.find("FROM UserBean") as List<UserBean>
     }
 
     open fun find(queryString: String, value: Any): List<UserBean> {
-        return hibernateTemplate!!.find(queryString, value) as List<UserBean>
+        return template.find(queryString, value) as List<UserBean>
+    }
+
+    open fun getByPrimaryKey(id: Int): UserBean? {
+//        template.load(UserBean::class.java,id)
+        return template.get(UserBean::class.java, id)
     }
 
     open fun save(userBean: UserBean): Int {
-        return hibernateTemplate!!.save(userBean) as Int
+        return template.save(userBean) as Int
     }
 
     open fun queryUser(name: String): List<*> {
-        val result = hibernateTemplate!!.find("FROM UserBean as E where E.userName = '$name'")
+        val result = template.find("FROM UserBean as E where E.userName = '$name'")
         return (result as List<*>)
     }
 
     fun findByProperty(key: String, value: Any) {
         val queryString = "FROM UserBean as E where E.$key = ?"
-        hibernateTemplate!!.findByNamedQuery("byName")
+        template.findByNamedQuery("byName")
     }
 
 

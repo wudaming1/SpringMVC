@@ -5,8 +5,8 @@ import javax.persistence.*
 
 @Component
 @Entity
-@Table(name="user")
-class UserBean{
+@Table(name = "user")
+class UserBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int = 0
@@ -18,6 +18,10 @@ class UserBean{
     constructor(userName: String, password: String) {
         this.userName = userName
         this.password = password
+    }
+
+    override fun toString(): String {
+        return "UserBean(id=$id, userName='$userName', password='$password')"
     }
 
 

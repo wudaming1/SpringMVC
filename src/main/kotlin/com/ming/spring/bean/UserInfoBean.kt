@@ -18,7 +18,7 @@ class UserInfoBean {
     @Column
     var birthday: Long = 0
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @GenericGenerator(name = "paymentableGenerator", strategy = "native")
     var id:Int = 0
 

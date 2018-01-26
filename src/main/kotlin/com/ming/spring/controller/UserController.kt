@@ -4,6 +4,8 @@ import com.ming.spring.bean.*
 import com.ming.spring.jwt.JWTHelper
 import com.ming.spring.service.UserService
 import com.ming.spring.utils.JsonUtil
+import com.ming.spring.utils.SpringContextUtil
+import com.ming.spring.utils.Util
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -97,8 +99,21 @@ class UserController {
         response.writer.write(JsonUtil.writeValueAsString(result))
     }
 
-    @RequestMapping(method = [(RequestMethod.GET)], value = ["/userInfo"])
-    fun getUserInfo(){
+    @RequestMapping(method = [(RequestMethod.GET)], value = ["auth/userInfo"])
+    fun getUserInfo(response: HttpServletResponse){
+        val userId = response.getHeader("userId").toInt()
+        var userInfo = userService.getUserInfo(userId)
 
+        if (userInfo == null){
+            userInfo = SpringContextUtil.getBean("userInfoBean") as UserInfoBean
+            val user = userService.getUser(userId) as UserBean
+            userInfo!!.id = userId
+            userInfo!!.userName = user.userName
+            userService.save(userInfo)
+        }
+        val stringBody = Util.generateSuccessMessage(userInfo)
+        response.writer.write(stringBody)
     }
+
+
 }

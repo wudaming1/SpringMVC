@@ -36,6 +36,9 @@ class UserService {
         }
     }
 
+    fun getUser(id: Int) = userDao.getByPrimaryKey(id)
+
+
     fun save(userBean: UserBean) = userDao.save(userBean)
 
 
@@ -52,5 +55,15 @@ class UserService {
             null
         }
     }
+
+    /**
+     * @param id 用户id
+     *
+     * @return null:不存在该用户信息，UserInfoBean查询到的用户实例
+     */
+    fun getUserInfo(id: Int) = infoDao.getByPrimaryKey(id)
+
+    fun save(userInfoBean: UserInfoBean) = infoDao.save(userInfoBean)
+
 
 }
