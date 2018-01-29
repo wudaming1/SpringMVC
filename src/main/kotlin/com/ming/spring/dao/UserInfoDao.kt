@@ -1,12 +1,7 @@
 package com.ming.spring.dao
 
 import com.ming.spring.bean.UserInfoBean
-import org.hibernate.SessionFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.orm.hibernate5.HibernateTemplate
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport
 import org.springframework.stereotype.Repository
-import java.io.Serializable
 
 @Repository
 open class UserInfoDao : BaseDao() {
@@ -25,6 +20,12 @@ open class UserInfoDao : BaseDao() {
         if (id >= 0)
             userInfoBean.id = id
         return template.save(userInfoBean) as Int
+    }
+
+    open fun update(userInfoBean: UserInfoBean, id: Int = -1){
+        if (id >= 0)
+            userInfoBean.id = id
+        template.update(userInfoBean)
     }
 
 

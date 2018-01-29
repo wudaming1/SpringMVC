@@ -4,6 +4,7 @@ import com.ming.spring.bean.UserBean
 import com.ming.spring.bean.UserInfoBean
 import com.ming.spring.dao.UserDao
 import com.ming.spring.dao.UserInfoDao
+import com.ming.spring.utils.SpringContextUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -41,6 +42,13 @@ class UserService {
 
     fun save(userBean: UserBean) = userDao.save(userBean)
 
+    fun saveUser(name:String,password:String): Int {
+        val userBean = SpringContextUtil.getBean("userBean") as UserBean
+        userBean.password = password
+        userBean.userName = name
+        return save(userBean)
+    }
+
 
     /**
      * @param userName 用户名
@@ -64,6 +72,10 @@ class UserService {
     fun getUserInfo(id: Int) = infoDao.getByPrimaryKey(id)
 
     fun save(userInfoBean: UserInfoBean) = infoDao.save(userInfoBean)
+
+    fun update(userInfoBean: UserInfoBean){
+        infoDao.update(userInfoBean)
+    }
 
 
 }
