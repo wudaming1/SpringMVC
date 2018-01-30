@@ -1,9 +1,11 @@
 package com.ming.spring.controller
 
-import com.ming.spring.bean.*
+import com.ming.spring.bean.ErrorBean
+import com.ming.spring.bean.ResponseBean
+import com.ming.spring.bean.UserBean
+import com.ming.spring.bean.UserInfoBean
 import com.ming.spring.jwt.JWTHelper
 import com.ming.spring.service.UserService
-import com.ming.spring.utils.JsonUtil
 import com.ming.spring.utils.SpringContextUtil
 import com.ming.spring.utils.Util
 import org.springframework.beans.factory.annotation.Autowired
@@ -48,7 +50,7 @@ class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(method = [(RequestMethod.GET)], value = ["auth/userInfo"])
+    @RequestMapping(method = [(RequestMethod.GET)], value = ["/auth/userInfo"])
     fun getUserInfo(response: HttpServletResponse): ResponseBean {
         val userId = response.getHeader("userId").toInt()
         var userInfo = userService.getUserInfo(userId)
@@ -64,7 +66,7 @@ class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(method = [(RequestMethod.PUT)], value = ["auth/userInfo"])
+    @RequestMapping(method = [(RequestMethod.PUT)], value = ["/auth/userInfo"])
     fun modifyUserInfo(@RequestParam("name") userName: String,
                        @RequestParam("imgUrl") imgUrl: String,
                        @RequestParam("sex") sex: String,
@@ -80,11 +82,8 @@ class UserController {
             userService.update(userInfo)
         }
 
-
         return Util.generateMessageBean(null
                 , if (userInfo == null) ErrorBean(message = "不存在这个用户id:$userId") else null)
-
-
     }
 
 
