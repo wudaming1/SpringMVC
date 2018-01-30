@@ -10,6 +10,8 @@ import com.ming.spring.utils.SpringContextUtil
 import com.ming.spring.utils.Util
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import java.io.File
 import javax.servlet.http.HttpServletResponse
 
 
@@ -84,6 +86,29 @@ class UserController {
 
         return Util.generateMessageBean(null
                 , if (userInfo == null) ErrorBean(message = "不存在这个用户id:$userId") else null)
+    }
+
+    @RequestMapping(method = [(RequestMethod.POST)], value = ["/auth/headImg"])
+    fun uploadHeadImg(@RequestParam("file") file: MultipartFile,
+                      response: HttpServletResponse): String {
+        val userId = response.getHeader("userId").toInt()
+        if (!file.isEmpty) {
+            val fileName = file.originalFilename
+            val path = SpringContextUtil.headImgPath
+            val filePath = File(path, fileName)
+            if (!filePath.parentFile.exists()) {
+                filePath.parentFile.mkdirs()
+            }
+
+            file.transferTo(filePath)
+            return if (userService.modifyHeadImg(userId, filePath.absolutePath))
+                 Util.generateSuccessMessage(null)
+            else Util.generateErrorMessage(ErrorBean(message = "更新数据库失败!"))
+
+        }
+
+        return Util.generateErrorMessage(ErrorBean(message = "未获取到文件!"))
+
     }
 
 

@@ -42,7 +42,7 @@ class UserService {
 
     fun save(userBean: UserBean) = userDao.save(userBean)
 
-    fun saveUser(name:String,password:String): Int {
+    fun saveUser(name: String, password: String): Int {
         val userBean = SpringContextUtil.getBean("userBean") as UserBean
         userBean.password = password
         userBean.userName = name
@@ -73,8 +73,19 @@ class UserService {
 
     fun save(userInfoBean: UserInfoBean) = infoDao.save(userInfoBean)
 
-    fun update(userInfoBean: UserInfoBean){
+    fun update(userInfoBean: UserInfoBean) {
         infoDao.update(userInfoBean)
+    }
+
+    fun modifyHeadImg(id: Int, path: String):Boolean {
+        val bean = infoDao.getByPrimaryKey(id)
+        bean?.apply {
+            imgUrl = path
+            update(this)
+            return true
+        }
+
+        return false
     }
 
 

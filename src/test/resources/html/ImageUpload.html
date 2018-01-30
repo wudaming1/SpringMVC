@@ -1,0 +1,25 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>文件上传</title>
+</head>
+<body>
+<h2>文件上传</h2>
+<!--真实应该用http://localhost:8080/auth/headImg，为了避免token校验，使用如下地址。-->
+<form action="http://localhost:8080/user/headImg" enctype="multipart/form-data" method="post">
+    <table>
+        <tr>
+            <td>文件描述:</td>
+            <td><input type="text" name="description"></td>
+        </tr>
+        <tr>
+            <td>请选择文件:</td>
+            <td><input type="file" name="file"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="上传"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
