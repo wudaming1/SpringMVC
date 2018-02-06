@@ -1,12 +1,17 @@
 package com.ming.spring.service
 
+import com.ming.spring.UserConfig
 import com.ming.spring.bean.UserBean
 import com.ming.spring.bean.UserInfoBean
 import com.ming.spring.dao.UserDao
 import com.ming.spring.dao.UserInfoDao
 import com.ming.spring.utils.SpringContextUtil
+import org.apache.commons.io.FileUtils
+import org.apache.commons.io.FilenameUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
+import java.io.File
 
 /**
  * 容纳业务层逻辑
@@ -77,15 +82,22 @@ class UserService {
         infoDao.update(userInfoBean)
     }
 
-    fun modifyHeadImg(id: Int, path: String):Boolean {
+    private fun modifyHeadImg(id: Int, path: String): Boolean {
         val bean = infoDao.getByPrimaryKey(id)
         bean?.apply {
-            imgUrl = path
-            update(this)
+            if (imgUrl != path) {
+                imgUrl = path
+                update(this)
+            }
             return true
         }
-
         return false
+    }
+
+    fun savePortraitFile(userId: Int, file: MultipartFile): Boolean {
+        val filePath = UserConfig.generatePortraitFile(userId, FilenameUtils.getExtension(file.originalFilename))
+        file.transferTo(filePath)
+        return modifyHeadImg(userId, filePath.absolutePath)
     }
 
 

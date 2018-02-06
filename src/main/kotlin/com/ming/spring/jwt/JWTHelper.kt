@@ -17,8 +17,10 @@ object JWTHelper {
 
     private val USER_ID = "user_id"
 
+    private val algorithm = Algorithm.RSA256(MyRSAKeyProvider())
+
     fun generateJWT(userId: Int): String {
-        val algorithm = Algorithm.RSA256(MyRSAKeyProvider())
+
         val jwt = JWT.create()
                 //在head部分添加自定义字段，不要添加敏感信息
                 .withHeader(mapOf("aries" to "白羊座"))
@@ -41,13 +43,12 @@ object JWTHelper {
                 //提供签名id
                 .withKeyId("aries")
                 //新建一个jwt，并用指定的算法进行签名加密，看起来应该最后调用，生成签名串
-                .sign(algorithm)
-        return jwt
+        return jwt.sign(algorithm)
     }
 
     fun verifyToken(token: String): Boolean {
-        val algorithm = Algorithm.RSA256(MyRSAKeyProvider())
-        val verify = JWT.require(algorithm).withAudience(AUDIENCE)
+        val verify = JWT.require(algorithm)
+                .withAudience(AUDIENCE)
                 .withJWTId(JWT_ID)
                 .withIssuer(ISSUER)
                 .acceptExpiresAt(leeway)
@@ -62,7 +63,7 @@ object JWTHelper {
 
     fun parserIdformToken(token: String):String{
         val jwt = JWT.decode(token)
-        return jwt.getClaim(USER_ID).asString()
+        return jwt.getClaim(USER_ID).asInt().toString()
 
     }
 }

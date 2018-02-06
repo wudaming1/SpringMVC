@@ -8,7 +8,7 @@ object Util{
 
     fun generateSuccessMessage(bean:Any?):String{
         val result = ResponseBean()
-        result.data = bean
+        result.data = if (bean == null)"" else JsonUtil.writeValueAsString(bean)
         return JsonUtil.writeValueAsString(result)
     }
 
@@ -18,7 +18,7 @@ object Util{
             result.status = ResultCode.FAIL
             result.error = errorBean
         }
-        result.data = bean
+        result.data = if (bean == null)"" else JsonUtil.writeValueAsString(bean)
         return result
     }
 

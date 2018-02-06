@@ -39,7 +39,7 @@ class MyRSAKeyProvider: RSAKeyProvider{
         return _publicKey
     }
 
-    private fun generatePublicKey(publicKey:String):RSAPublicKey{
+    private fun generatePublicKey(publicKey: String): RSAPublicKey {
 //        println(publicKey)
         val keyBytes = Base64.getDecoder().decode(publicKey.toByteArray())
         val keySpec = X509EncodedKeySpec(keyBytes)
@@ -47,7 +47,7 @@ class MyRSAKeyProvider: RSAKeyProvider{
         return keyFactory.generatePublic(keySpec) as RSAPublicKey
     }
 
-    private fun generatePrivateKey(keyString:String):RSAPrivateKey{
+    private fun generatePrivateKey(keyString: String): RSAPrivateKey {
 //        println(keyString)
         val keyBytes = Base64.getDecoder().decode(keyString.toByteArray())
         val keySpec = PKCS8EncodedKeySpec(keyBytes)

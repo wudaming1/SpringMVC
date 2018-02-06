@@ -21,5 +21,5 @@ object SpringContextUtil : ApplicationContextAware {
 
     fun getBean(name: String) = context.getBean(name)
 
-
+    fun getResources(location: String) = context.getResource(location)
 }
