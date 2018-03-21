@@ -3,9 +3,10 @@
 
 #配置
 ##虚拟路径配置
-真实路径为：~/MingSource---虚拟路径/resources
+真实路径为:~/serverResource---虚拟路径:/serverResource
 
 ！[配置图片](/resources/虚拟路径配置.jpg)
+这个配置是基于idea的，其他配置参考http://blog.csdn.net/jdjdndhj/article/details/52693652
 修改时注意同步修改对象SourceConfig中root的路径
 
 ##JWT密钥

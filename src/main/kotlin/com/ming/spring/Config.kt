@@ -7,7 +7,7 @@ object Config {
 }
 
 object SourceConfig {
-    val root = "/Users/wudaming/MingSource"
+    val root = "/root/serverResource"
 
     val image = "$root/images"
 

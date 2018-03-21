@@ -42,9 +42,9 @@
     <bean id="springContextUtils" class="com.ming.spring.utils.SpringContextUtil"/>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="user" value="root"/>
+        <property name="user" value="aries"/>
         <property name="password" value="123456"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/SpringAries"/>
+        <property name="jdbcUrl" value="jdbc:mysql://140.143.239.14:3306/SpringAries"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </bean>
 
