@@ -1,6 +1,5 @@
 package com.ming.spring.controller
 
-import com.ming.spring.UserConfig
 import com.ming.spring.bean.ErrorBean
 import com.ming.spring.bean.ResponseBean
 import com.ming.spring.bean.UserBean
@@ -9,11 +8,9 @@ import com.ming.spring.jwt.JWTHelper
 import com.ming.spring.service.UserService
 import com.ming.spring.utils.SpringContextUtil
 import com.ming.spring.utils.Util
-import org.apache.commons.io.FilenameUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import java.io.File
 import javax.servlet.http.HttpServletResponse
 
 
